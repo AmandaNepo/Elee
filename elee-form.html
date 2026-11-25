@@ -36,13 +36,13 @@ body.open .reveal{opacity:1;transform:none}
 body.open .reveal[style*="--i"]{transition-delay:calc(var(--i)*90ms + 120ms)}
 
 h1{font-weight:500;font-size:clamp(30px,6vw,40px);line-height:1.08;letter-spacing:-.01em;margin:0 0 8px;text-wrap:balance}
-.sub{margin:0 0 28px;max-width:38ch}
+.sub{margin:0 0 22px;max-width:38ch}
 label{display:block;font-weight:500;font-size:15px;margin:0 0 8px}
 input{width:100%;font:inherit;font-size:16px;color:#161616;height:52px;padding:0 16px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;transition:border-color .2s, box-shadow .2s}
 input:focus-visible{border-color:var(--ink);box-shadow:0 0 0 3px rgba(185,133,211,.45)}
 input[aria-invalid=true]{border-color:#A3245A}
-.err{color:#8E1F4D;font-size:14px;min-height:20px;margin:6px 0 0}
-.field{margin-bottom:14px}
+.err{color:#8E1F4D;font-size:14px;margin:4px 0 0}.err:empty{display:none}
+.field{margin-bottom:16px}
 .btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:15px;letter-spacing:.06em;height:54px;padding:0 28px;border-radius:999px;width:100%;transition:transform .15s, background .2s}.btn:active{transform:scale(.98)}
 .btn:focus-visible,a:focus-visible{outline:3px solid var(--lav-d);outline-offset:3px}
 .btn[disabled]{opacity:.6;cursor:progress}
@@ -54,7 +54,7 @@ input[aria-invalid=true]{border-color:#A3245A}
 .done .btn{display:inline-flex;align-items:center;justify-content:center;width:auto;text-decoration:none}
 form.hide{display:none}
 
-.card{width:min(460px,100%);background:var(--card);color:var(--txt);border-radius:28px;padding:36px clamp(22px,5vw,40px) 30px;
+.card{align-self:flex-start;width:min(460px,100%);background:var(--card);color:var(--txt);border-radius:28px;padding:36px clamp(22px,5vw,40px) 30px;
   box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 30px 70px -24px rgba(70,35,70,.32);transition:background .5s,color .5s}
 .sub{color:var(--muted)} .req{color:var(--req)}
 input{background:var(--in);border-color:var(--line)}
@@ -92,7 +92,7 @@ input{background:var(--in);border-color:var(--line)}
         <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="phone-err">
         <p class="err" id="phone-err" aria-live="polite"></p>
       </div>
-      <div class="submit-wrap reveal" style="--i:6"><button class="btn" id="go" type="submit">Submit</button></div>
+      <div class="submit-wrap reveal" style="--i:6;margin-top:22px"><button class="btn" id="go" type="submit">Submit</button></div>
     </form>
     <div class="done" id="done" aria-live="polite">
       <h2 id="doneTitle">Thank you</h2>
