@@ -4,6 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Elee Eyelash Curler</title>
+<meta name="description" content="We'll be in touch about Elee.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elee Eyelash Curler">
+<meta property="og:description" content="We'll be in touch about Elee.">
+<meta property="og:url" content="https://amandanepo.github.io/Elee/elee-form.html">
+<meta property="og:image" content="https://amandanepo.github.io/Elee/elee-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Elee script logo on lavender satin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://amandanepo.github.io/Elee/elee-preview.jpg">
+<meta name="theme-color" content="#D6ABDD">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
@@ -50,8 +62,18 @@ input[aria-invalid=true]{border-color:#A3245A}
 .done{display:none;text-align:center}
 .done.show{display:block}
 .done h2{font-weight:500;font-size:32px;line-height:1.1;margin:0 0 10px}
-.done p{margin:0 auto 22px;max-width:34ch;color:var(--muted)}
+.done p{margin:0 auto 22px;max-width:34ch;color:var(--muted);text-wrap:balance}
 .done .btn{display:inline-flex;align-items:center;justify-content:center;width:auto;text-decoration:none}
+.card{transition:height .55s cubic-bezier(.2,.7,.2,1),background .5s,color .5s}
+form.fading{opacity:0;transform:translateY(-8px);transition:opacity .3s ease,transform .3s ease}
+.done .smile{display:block;width:120px;height:22px;margin:4px auto 14px;overflow:visible}
+.done .smile path{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-dasharray:140;stroke-dashoffset:140;opacity:0}
+.done.show .smile path{animation:draw .9s .35s cubic-bezier(.6,0,.2,1) forwards}
+.done.show h2,.done.show p,.done.show .btn{opacity:0;animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+.done.show h2{animation-delay:.1s}.done.show p{animation-delay:.55s}.done.show .btn{animation-delay:.7s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes draw{0%{opacity:0}1%{opacity:1}100%{opacity:1;stroke-dashoffset:0}}
+.done h2:focus{outline:none}
 form.hide{display:none}
 [hidden]{display:none !important}
 
@@ -76,8 +98,8 @@ input{background:var(--in);border-color:var(--line)}
 <main class="page" id="page">
   <section class="card reveal" aria-labelledby="ttl">
     <form id="f" novalidate>
-      <h1 id="ttl" class="reveal" style="--i:1">Join the Elee list!</h1>
-      <p class="sub reveal" style="--i:2">We'll be in touch about the Elee eyelash curler.</p>
+      <h1 id="ttl" class="reveal" style="--i:1">Join the Elee list</h1>
+      <p class="sub reveal" style="--i:2">We'll be in touch about Elee.</p>
       <div class="field reveal" style="--i:3" data-step="0">
         <label for="name">Name (first and last) <span class="req" aria-hidden="true">*</span></label>
         <input id="name" name="name" autocomplete="name" required aria-describedby="name-err">
@@ -97,6 +119,7 @@ input{background:var(--in);border-color:var(--line)}
     </form>
     <div class="done" id="done" aria-live="polite">
       <h2 id="doneTitle">Thank you</h2>
+      <svg class="smile" viewBox="0 0 120 22" aria-hidden="true"><path d="M4 4 Q60 34 116 3"/></svg>
       <p id="doneText">You're on the list. We'll be in touch soon.</p>
       <a class="btn" id="doneLink" href="#" hidden>Finish in Google Forms</a>
     </div>
@@ -151,7 +174,7 @@ f.addEventListener('submit',async e=>{
   const w=document.getElementById('name').value.trim().split(/\s+/)[0]; const first=w.charAt(0).toUpperCase()+w.slice(1);
   let sent=false;
   try{await fetch(FORM+'formResponse',{method:'POST',mode:'no-cors',body:data});sent=true}catch(err){sent=false}
-  f.classList.add('hide'); done.classList.add('show');
+  const card=document.querySelector('.card');
   const t=document.getElementById('doneTitle'), p=document.getElementById('doneText'), a=document.getElementById('doneLink');
   if(sent){t.textContent='Thank you '+first+'!';p.textContent='You\'re on the list. We\'ll be in touch soon.';a.hidden=true}
   else{
@@ -159,6 +182,16 @@ f.addEventListener('submit',async e=>{
     p.textContent='This preview can\'t send answers by itself. Open the Google Form to finish: your answers are already filled in.';
     a.href=FORM+'viewform?usp=pp_url&'+data.toString(); a.hidden=false;
   }
+  const h0=card.offsetHeight; card.style.height=h0+'px';
+  f.classList.add('fading');
+  window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  setTimeout(()=>{
+    f.classList.add('hide'); done.classList.add('show');
+    card.style.height='auto'; const h1=card.offsetHeight; card.style.height=h0+'px';
+    card.offsetHeight; card.style.height=h1+'px';
+    setTimeout(()=>{card.style.height=''},600);
+    t.setAttribute('tabindex','-1'); t.focus({preventScroll:true});
+  },reduce?0:320);
   go.disabled=false;
 });
 play();
