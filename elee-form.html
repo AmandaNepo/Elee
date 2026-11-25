@@ -53,6 +53,7 @@ input[aria-invalid=true]{border-color:#A3245A}
 .done p{margin:0 auto 22px;max-width:34ch;color:var(--muted)}
 .done .btn{display:inline-flex;align-items:center;justify-content:center;width:auto;text-decoration:none}
 form.hide{display:none}
+[hidden]{display:none !important}
 
 .card{align-self:flex-start;width:min(460px,100%);background:var(--card);color:var(--txt);border-radius:28px;padding:36px clamp(22px,5vw,40px) 30px;
   box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 30px 70px -24px rgba(70,35,70,.32);transition:background .5s,color .5s}
@@ -76,7 +77,7 @@ input{background:var(--in);border-color:var(--line)}
   <section class="card reveal" aria-labelledby="ttl">
     <form id="f" novalidate>
       <h1 id="ttl" class="reveal" style="--i:1">Join the Elee list</h1>
-      <p class="sub reveal" style="--i:2">Leave your details and we'll be in touch about the Elee eyelash curler.</p>
+      <p class="sub reveal" style="--i:2">We'll be in touch about the Elee eyelash curler.</p>
       <div class="field reveal" style="--i:3" data-step="0">
         <label for="name">Name (first and last) <span class="req" aria-hidden="true">*</span></label>
         <input id="name" name="name" autocomplete="name" required aria-describedby="name-err">
@@ -147,14 +148,14 @@ f.addEventListener('submit',async e=>{
   const data=new URLSearchParams();
   ids.forEach(id=>data.append(MAP[id],document.getElementById(id).value.trim()));
   const go=document.getElementById('go'); go.disabled=true;
-  const first=document.getElementById('name').value.trim().split(/\s+/)[0];
+  const w=document.getElementById('name').value.trim().split(/\s+/)[0]; const first=w.charAt(0).toUpperCase()+w.slice(1);
   let sent=false;
   try{await fetch(FORM+'formResponse',{method:'POST',mode:'no-cors',body:data});sent=true}catch(err){sent=false}
   f.classList.add('hide'); done.classList.add('show');
   const t=document.getElementById('doneTitle'), p=document.getElementById('doneText'), a=document.getElementById('doneLink');
-  if(sent){t.textContent='Thank you, '+first;p.textContent='You\'re on the list. We\'ll be in touch soon.';a.hidden=true}
+  if(sent){t.textContent='Thank you '+first+'!';p.textContent='You\'re on the list. We\'ll be in touch soon.';a.hidden=true}
   else{
-    t.textContent='Almost there, '+first;
+    t.textContent='Almost there '+first+'!';
     p.textContent='This preview can\'t send answers by itself. Open the Google Form to finish: your answers are already filled in.';
     a.href=FORM+'viewform?usp=pp_url&'+data.toString(); a.hidden=false;
   }
